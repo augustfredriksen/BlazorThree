@@ -13,6 +13,7 @@ export async function create() {
         golfBall.position.setY(4);
         golfBall.position.setZ(-5);
         golfBall.name = "golf_ball";
+        golfBall.userData.isContainer = true;
         golfBall.traverse(function (child) {
             if (child.isMesh) {
                 child.castShadow = true;

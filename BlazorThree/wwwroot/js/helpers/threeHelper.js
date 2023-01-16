@@ -113,7 +113,8 @@ export function onPointerDown(event) {
 
 	if (intersects.length > 0) {
 
-		console.log('Intersection:', intersects[0].instanceId);
+		const object = intersects[0].object;
+		object.material.color.set("cyan");
 
 	}
 }
