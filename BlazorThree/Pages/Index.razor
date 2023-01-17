@@ -1,7 +1,13 @@
 ﻿@page "/"
-@inject IJSRuntime JSRuntime
+@using BlazorThree.Data
+
+@inject IJSRuntime JS
+
+
 <canvas id="myCanvas"></canvas>
-
 @code {
-
-}
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JS.InvokeVoidAsync("script");
+    }
+} 

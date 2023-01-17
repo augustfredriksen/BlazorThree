@@ -3,8 +3,4 @@
 export async function start() {
     await main();
 }
-window.onload = start();
-
-function getInfo(name) {
-
-}
+//await start();

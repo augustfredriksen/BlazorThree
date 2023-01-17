@@ -8,6 +8,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 export let g_scene, g_renderer, g_camera, g_controls;
 const raycaster = new THREE.Raycaster();
+let previousSelectedObject;
 const mouse = new THREE.Vector2();
 
 
@@ -16,7 +17,7 @@ export function createThreeScene() {
 
 	// Renderer:
 	g_renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
-	g_renderer.setSize(window.innerWidth*0.8, window.innerHeight*0.8);
+	g_renderer.setSize(window.innerWidth, window.innerHeight);
 	g_renderer.setClearColor(0xbfd104, 0xff); //farge, alphaverdi.
 	g_renderer.shadowMap.enabled = true; //NB!
 	g_renderer.shadowMapSoft = true;
@@ -104,8 +105,9 @@ export function addMeshToScene(mesh) {
 export function onPointerDown(event) {
 	event.preventDefault();
 
-	mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-	mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+	var rect = g_renderer.domElement.getBoundingClientRect();
+	mouse.x = ((event.clientX - rect.left) / (rect.right - rect.left)) * 2 - 1;
+	mouse.y = - ((event.clientY - rect.top) / (rect.bottom - rect.top)) * 2 + 1;
 
 	raycaster.setFromCamera(mouse, g_camera);
 
@@ -114,6 +116,11 @@ export function onPointerDown(event) {
 	if (intersects.length > 0) {
 
 		const object = intersects[0].object;
+		if (previousSelectedObject) {
+			previousSelectedObject.material.color.set(previousSelectedObject.currentColor);
+		}
+		previousSelectedObject = object;
+		object.currentColor = object.material.color.getHex();
 		object.material.color.set("cyan");
 
 	}
