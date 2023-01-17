@@ -3,4 +3,3 @@
 export async function start() {
     await main();
 }
-//await start();

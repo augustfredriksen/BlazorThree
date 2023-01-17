@@ -1,13 +1,28 @@
 ﻿@page "/"
 @using BlazorThree.Data
 
-@inject IJSRuntime JS
+@inject IJSRuntime JS;
+<button class="btn btn-primary" @onclick="StartThree">START</button>
 
 
 <canvas id="myCanvas"></canvas>
 @code {
+
+    async Task Start()
+    {
+        await JS.InvokeVoidAsync("callStart");
+    }
+
+    private async void StartThree()
+    {
+        await Start();
+    }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await JS.InvokeVoidAsync("script");
+        if (firstRender)
+        {
+
+        }
     }
 } 
